@@ -16,16 +16,17 @@ slack.api('rtm.start', function(err, response) {
 	    var msgText = msg.text;
 	    if(msgText.toLowerCase().indexOf("it's been") >= 0 || msgText.toLowerCase().indexOf("its been") >= 0) {
 		console.log(msgText.toLowerCase().replace(/it's been|its been/g, ":musical_note: It's Been :musical_note:"));
-		slack.api('chat.upate', 
-		     {
-			  token: apiToken, 
-	         	  ts:msg.ts,
-		          channel:msg.channel,
-		          text:msgText.toLowerCase().replace(/it's been|its been/g, ":musical_note: It's Been :musical_note:")
-                     }
+		slack.api('chat.update', 
+		{
+		    token: apiToken, 
+	            ts:msg.ts,
+		    channel:msg.channel,
+		    text:msgText.toLowerCase().replace(/it's been|its been/g, ":musical_note: It's Been :musical_note:"),
+                },
+			  function(err, res) {
+			      console.log(err,res);}
 		);
 	    }
 	}
     });
-
 });
