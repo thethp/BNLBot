@@ -14,15 +14,11 @@ slack.api('rtm.start', function(err, response) {
 	var msg = JSON.parse(data);
 	if(msg.user == 'U03BGBD92' && msg.type == 'message') {
 	    var msgText = msg.text;
-	    var apostropheBNL = msgText.toLowerCase().indexOf("it's been");
-	    if(apostropheBNL > 0) {
-		console.log(msgText,apostropheBNL,':musical_note:');
+	    if(msgText.toLowerCase().indexOf("it's been") >= 0 || msgText.toLowerCase().indexOf("its been") >= 0) {
+		slack.api('chat.upate', {token: apiToken, ts:msg.ts,channel:msg.channel,});
+		msgText.toLowerCase().replace(/it's been|its been/g, ":musical_note: It's Been :musical_note:")
 	    }
 	}
     });
 
 });
-
-function insert(str, index, val) {
-    return str.substr(0, index) + val + str.substr(index);
-}
